@@ -62,7 +62,7 @@ class KeyboardHelper:
         while self.__loop:
             self.__get_key()
 
-        #termios.tcsetattr(sys.stdin, termios.TCSADRAIN, self.__original_settings)
+        self.eventType, self.control, self.value = gamepad.getNextEvent()
 
     def end_get_key_continuous(self):
         """end_loop sets the private variable __loop to false so that the while loop from continuous_get_key is stopped.

@@ -32,11 +32,13 @@ def keycode_callback(keycode):
 async def main():
     """
     Runs the main control loop for this demo.  Uses the KeyboardHelper class to read a keypress from the terminal.
+
     W - Go forward.  Press multiple times to increase speed.
     A - Decrease heading by -10 degrees with each key press.
     S - Go reverse. Press multiple times to increase speed.
     D - Increase heading by +10 degrees with each key press.
     Spacebar - Reset speed and flags to 0. RVR will coast to a stop
+
     """
     global current_key_code
     global speed

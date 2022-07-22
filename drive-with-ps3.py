@@ -48,6 +48,7 @@ async def main():
     await rvr.reset_yaw()
 
     while True:
+        print(current_key_code)
 
         if current_key_code == 'DPAD-UP':  # W
             # if previously going reverse, reset speed back to 64

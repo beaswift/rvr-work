@@ -3,13 +3,6 @@ import time
 
 # Gamepad settings
 gamepadType = Gamepad.PS3
-# buttonX = 'CROSS'
-# buttonO = 'CIRCLE'
-# buttonExit = 'PS'
-# buttonForward = 'DPAD-UP'
-# buttonBackward = 'DPAD-DOWN'
-# buttonLeft = 'DPAD-LEFT'
-# buttonRight = 'DPAD-RIGHT'
 joystickSpeed = 'LEFT-Y'
 joystickSteering = 'RIGHT-X'
 
@@ -25,11 +18,10 @@ print('Gamepad connected')
 speed = 0.0
 steering = 0.0
 
-
 def return_control(eventType, control, value):
     if eventType == 'BUTTON':
         # Button changed
-        print(control)
+        print("Module say: " + control)
         return(control)
     elif eventType == 'AXIS':
         # Joystick changed
@@ -52,7 +44,6 @@ class KeyboardHelper:
         eventType, control, value = gamepad.getNextEvent()
         key_code = return_control(eventType, control, value)
         #self.__original_settings = termios.tcgetattr(sys.stdin)
- 
 
     @property
     def key_code(self):

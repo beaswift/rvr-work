@@ -41,8 +41,8 @@ class KeyboardHelper:
         self.__key_code = -1
         self.__loop = True
         self.__callback = None
-        eventType, control, value = gamepad.getNextEvent()
-        key_code = return_control(eventType, control, value)
+        self.eventType, self.control, self.value = gamepad.getNextEvent()
+        key_code = return_control(self.eventType, self.control, self.value)
         #self.__original_settings = termios.tcgetattr(sys.stdin)
 
     @property
@@ -71,7 +71,7 @@ class KeyboardHelper:
 
     def __get_key(self, return_control):
         #tty.setcbreak(sys.stdin)
-        eventType, control, value = gamepad.getNextEvent()
-        key_code = return_control(eventType, control, value)
+        self.eventType, self.control, self.value = gamepad.getNextEvent()
+        key_code = return_control(self.eventType, self.control, self.value)
         #termios.tcsetattr(sys.stdin, termios.TCSADRAIN, self.__original_settings)
         self.__callback(key_code)

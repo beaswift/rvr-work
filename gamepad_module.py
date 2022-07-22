@@ -41,7 +41,7 @@ class KeyboardHelper:
         self.__key_code = -1
         self.__loop = True
         self.__callback = None
-        #self.eventType, self.control, self.value = gamepad.getNextEvent()
+        self.eventType, self.control, self.value = gamepad.getNextEvent()
         #key_code = return_control(self.eventType, self.control, self.value)
         #self.__original_settings = termios.tcgetattr(sys.stdin)
 

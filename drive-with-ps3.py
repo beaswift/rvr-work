@@ -4,7 +4,10 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'
 
 import asyncio
 
-from gamepad_module import KeyboardHelper
+import Gamepad
+import time
+
+#from gamepad_module import KeyboardHelper
 from sphero_sdk import SerialAsyncDal
 from sphero_sdk import SpheroRvrAsync
 
@@ -15,6 +18,33 @@ driving_keys = [119, 97, 115, 100, 32]
 speed = 0
 heading = 0
 flags = 0
+
+
+# Gamepad settings
+gamepadType = Gamepad.PS3
+gamepad = gamepadType()
+joystickSpeed = 'LEFT-Y'
+joystickSteering = 'RIGHT-X'
+
+def return_control(eventType, control, value):
+    if eventType == 'BUTTON':
+        # Button changed
+        current_key_code = control
+        print(control)
+        return(control)
+    elif eventType == 'AXIS':
+        # Joystick changed
+        if control == joystickSpeed:
+            # Speed control (inverted)
+            speed = -value
+            return("Speed = " + speed)
+        elif control == joystickSteering:
+            # Steering control (not inverted)
+            steering = value
+            return("Steering = " + steering)
+        #print('%+.1f %% speed, %+.1f %% steering' % (speed * 100, steering * 100))
+
+
 
 loop = asyncio.get_event_loop()
 rvr = SpheroRvrAsync(
@@ -102,7 +132,13 @@ async def main():
 def run_loop():
     global loop
     global key_helper
-    key_helper.set_callback(keycode_callback)
+    while gamepad.isConnected():
+        # Wait for the next event
+        eventType, control, value = gamepad.getNextEvent()
+        if value:
+            return_control(eventType, control, value)
+    return_control(eventType, control, value)
+    #key_helper.set_callback(keycode_callback)
     loop.run_until_complete(
         asyncio.gather(
             main()
@@ -111,12 +147,12 @@ def run_loop():
 
 
 if __name__ == "__main__":
-    loop.run_in_executor(None, key_helper.get_key_continuous)
+    #loop.run_in_executor(None, key_helper.get_key_continuous)
     try:
         run_loop()
     except KeyboardInterrupt:
         print("Keyboard Interrupt...")
-        key_helper.end_get_key_continuous()
+    #    key_helper.end_get_key_continuous()
     finally:
         print("Press any key to exit.")
         exit(1)

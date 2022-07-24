@@ -105,6 +105,7 @@ def run_loop():
     global loop
     global key_helper
     key_helper.set_callback(keycode_callback)
+    print(current_key_code)
     loop.run_until_complete(
         asyncio.gather(
             main()

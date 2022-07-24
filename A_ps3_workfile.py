@@ -52,8 +52,6 @@ async def main():
 
     while True:
 
-        #print(current_key_code)
-
         if current_key_code == "DPAD-UP":  # W
             # if previously going reverse, reset speed back to 64
             if flags == 1:
@@ -65,6 +63,8 @@ async def main():
             flags = 0
         elif current_key_code == "DPAD-LEFT":  # A
             heading -= 10
+        elif current_key_code == "L2":  # A
+            heading -= 30    
         elif current_key_code == "DPAD-DOWN":  # S
             # if previously going forward, reset speed back to 64
             if flags == 0:
@@ -76,6 +76,8 @@ async def main():
             flags = 1
         elif current_key_code == "DPAD-RIGHT":  # D
             heading += 10
+        elif current_key_code == "R2":  # D
+            heading += 30
         elif current_key_code == 'CROSS':  # SPACE
             # reset speed and flags, but don't modify heading.
             speed = 0

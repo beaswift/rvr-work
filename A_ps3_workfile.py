@@ -52,6 +52,8 @@ async def main():
 
     while True:
 
+        print(current_key_code)
+
         if current_key_code == 'DPAD-UP':  # W
             # if previously going reverse, reset speed back to 64
             if flags == 1:
@@ -105,7 +107,7 @@ def run_loop():
     global loop
     global key_helper
     key_helper.set_callback(keycode_callback)
-    print(current_key_code)
+    #print(current_key_code)
     loop.run_until_complete(
         asyncio.gather(
             main()

@@ -66,7 +66,7 @@ class Ps3Helper:
 
         """
         while self.__loop:
-            self.__get_gamepad_input()
+            self.get_gamepad_input()
 
         #termios.tcsetattr(sys.stdin, termios.TCSADRAIN, self.__original_settings)
 

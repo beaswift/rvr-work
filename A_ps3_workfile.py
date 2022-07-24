@@ -125,5 +125,5 @@ if __name__ == "__main__":
         print("Keyboard Interrupt...")
         key_helper.end_get_control_continuous()
     finally:
-        print("Press any key to exit.")
+        #print("Press any key to exit.")
         exit

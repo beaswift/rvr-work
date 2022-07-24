@@ -34,7 +34,7 @@ class Ps3Helper:
             
             if eventType == 'BUTTON':
                 # Button changed
-                print(control)
+                #print(control)
                 self.__callback(control)
                 #return(control)   
             #elif eventType == 'AXIS':

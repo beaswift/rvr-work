@@ -113,12 +113,12 @@ def run_loop():
 
 
 if __name__ == "__main__":
-    loop.run_in_executor(None, key_helper.get_key_continuous)
+    loop.run_in_executor(None, key_helper.get_control_continuous)
     try:
         run_loop()
     except KeyboardInterrupt:
         print("Keyboard Interrupt...")
-        key_helper.end_get_key_continuous()
+        key_helper.end_get_control_continuous()
     finally:
         print("Press any key to exit.")
         exit(1)

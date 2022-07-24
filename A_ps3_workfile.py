@@ -126,4 +126,4 @@ if __name__ == "__main__":
         key_helper.end_get_control_continuous()
     finally:
         print("Press any key to exit.")
-        exit(1)
+        exit

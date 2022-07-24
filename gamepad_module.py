@@ -63,21 +63,11 @@ class Ps3Helper:
 
     def get_control_continuous(self):
         """continuous_get_key records keystrokes in a while loop controlled by the private variable __loop.
-
         """
         while self.__loop:
             self.get_gamepad_input()
 
-        #termios.tcsetattr(sys.stdin, termios.TCSADRAIN, self.__original_settings)
-
     def end_get_control_continuous(self):
         """end_loop sets the private variable __loop to false so that the while loop from continuous_get_key is stopped.
-
         """
         self.__loop = False
-
-#    def __get_key(self):
-#        tty.setcbreak(sys.stdin)
-#        key_code = ord(sys.stdin.read(1))
-#        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, self.__original_settings)
-#        self.__callback(key_code)

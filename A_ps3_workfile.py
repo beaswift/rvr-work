@@ -124,7 +124,7 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         key_helper.end_get_control_continuous()
         print("Keyboard Interrupt...")
-        raise SystemExit
-    #finally:
+    finally:
+        exit(0)
         #print("Press any key to exit.")
-    #    exit
+        

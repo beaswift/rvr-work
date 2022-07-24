@@ -4,47 +4,17 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'
 
 import asyncio
 
-import Gamepad
-import time
-
-#from gamepad_module import KeyboardHelper
+from helper_keyboard_input import KeyboardHelper  #** import of KeyboardHelper
 from sphero_sdk import SerialAsyncDal
 from sphero_sdk import SpheroRvrAsync
 
 # initialize global variables
-key_helper = KeyboardHelper()
+key_helper = KeyboardHelper()  #** creation of variable for KeyboardHelper() object variable
 current_key_code = -1
 driving_keys = [119, 97, 115, 100, 32]
 speed = 0
 heading = 0
 flags = 0
-
-
-# Gamepad settings
-gamepadType = Gamepad.PS3
-gamepad = gamepadType()
-joystickSpeed = 'LEFT-Y'
-joystickSteering = 'RIGHT-X'
-
-def return_control(eventType, control, value):
-    if eventType == 'BUTTON':
-        # Button changed
-        current_key_code = control
-        print(control)
-        return(control)
-    elif eventType == 'AXIS':
-        # Joystick changed
-        if control == joystickSpeed:
-            # Speed control (inverted)
-            speed = -value
-            return("Speed = " + speed)
-        elif control == joystickSteering:
-            # Steering control (not inverted)
-            steering = value
-            return("Steering = " + steering)
-        #print('%+.1f %% speed, %+.1f %% steering' % (speed * 100, steering * 100))
-
-
 
 loop = asyncio.get_event_loop()
 rvr = SpheroRvrAsync(
@@ -53,20 +23,22 @@ rvr = SpheroRvrAsync(
     )
 )
 
-def keycode_callback(keycode):
-    global current_key_code
-    current_key_code = keycode
-    print("Key code updated: ", str(current_key_code))
+def keycode_callback(keycode):  #*Creation of keycode callback.  
+    global current_key_code   #*  I believe this is the creation of the function that will set the current key code after 
+    current_key_code = keycode  # so after the keycode is created, this will overwrite the current_key_code globally
+    print("Key code updated: ", str(current_key_code))  #which will be called back below.
 
 
 async def main():
     """
     Runs the main control loop for this demo.  Uses the KeyboardHelper class to read a keypress from the terminal.
+
     W - Go forward.  Press multiple times to increase speed.
     A - Decrease heading by -10 degrees with each key press.
     S - Go reverse. Press multiple times to increase speed.
     D - Increase heading by +10 degrees with each key press.
     Spacebar - Reset speed and flags to 0. RVR will coast to a stop
+
     """
     global current_key_code
     global speed
@@ -78,9 +50,8 @@ async def main():
     await rvr.reset_yaw()
 
     while True:
-        print(current_key_code)
 
-        if current_key_code == 'DPAD-UP':  # W
+        if current_key_code == 119:  # W
             # if previously going reverse, reset speed back to 64
             if flags == 1:
                 speed = 64
@@ -89,9 +60,9 @@ async def main():
                 speed += 64
             # go forward
             flags = 0
-        elif current_key_code == 'DPAD-DOWN':  # A
+        elif current_key_code == 97:  # A
             heading -= 10
-        elif current_key_code == 'DPAD-RIGHT':  # S
+        elif current_key_code == 115:  # S
             # if previously going forward, reset speed back to 64
             if flags == 0:
                 speed = 64
@@ -100,9 +71,9 @@ async def main():
                 speed += 64
             # go reverse
             flags = 1
-        elif current_key_code == 'DPAD-RIGHT':  # D
+        elif current_key_code == 100:  # D
             heading += 10
-        elif current_key_code == 'CROSS':  # SPACE
+        elif current_key_code == 32:  # SPACE
             # reset speed and flags, but don't modify heading.
             speed = 0
             flags = 0
@@ -131,15 +102,9 @@ async def main():
 
 def run_loop():
     global loop
-    global key_helper
-    while gamepad.isConnected():
-        # Wait for the next event
-        eventType, control, value = gamepad.getNextEvent()
-        if value:
-            return_control(eventType, control, value)
-    return_control(eventType, control, value)
-    #key_helper.set_callback(keycode_callback)
-    loop.run_until_complete(
+    global key_helper ##  reference to the global key_helper variable 
+    key_helper.set_callback(keycode_callback)   # runs the above keycode_callback function, which takes the keycode 
+    loop.run_until_complete(                    #   and sets that as the current_key_code
         asyncio.gather(
             main()
         )
@@ -147,12 +112,12 @@ def run_loop():
 
 
 if __name__ == "__main__":
-    #loop.run_in_executor(None, key_helper.get_key_continuous)
+    loop.run_in_executor(None, key_helper.get_key_continuous)
     try:
         run_loop()
     except KeyboardInterrupt:
         print("Keyboard Interrupt...")
-    #    key_helper.end_get_key_continuous()
+        key_helper.end_get_key_continuous()
     finally:
         print("Press any key to exit.")
         exit(1)

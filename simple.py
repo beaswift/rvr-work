@@ -1,6 +1,6 @@
 # Load the gamepad and time libraries
 import Gamepad
-import time
+import time 
 
 # Gamepad settings
 gamepadType = Gamepad.PS3

@@ -1,0 +1,28 @@
+cd .. && rm -rf rvr-work/ && git clone https://github.com/beaswift/rvr-work && cd rvr-work
+
+connect ps3 controller
+ use sixpair here to set up the controller: https://pimylifeup.com/raspberry-pi-playstation-controllers/
+
+ then use: 
+ sudo systemctl enable bluetooth
+ sudo systemctl start bluetooth
+ sudo bluetoothctl 
+ agent on
+ default-agent
+ discoverable on
+ scan on
+ connect MAC:ADDRESS:OF:CONTROLLER:THAT:SHOWS:UP
+ trust MAC:ADDRESS:OF:CONTROLLER:THAT:SHOWS:UP
+
+connect 00:19:C1:EF:6D:CD
+
+sudo apt install -y libusb-dev tmux python3-pip git
+
+#sudo apt-get install python3-pip
+
+#sudo apt-get install git
+
+git clone https://github.com/sphero-inc/sphero-sdk-raspberrypi-python.git
+
+git clone https://github.com/beaswift/rvr-work.git
+
